@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Negozio di Tecnologia</title>
+    <h1>benvenuti nel nostro sito !!!!!!!!!!</h1>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #334155;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .cart-btn {
+            background-color: var(--primary);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s;
+        }
+
+        .cart-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .cart-badge {
+            background-color: var(--accent);
+            color: var(--bg-color);
+            padding: 0.1rem 0.5rem;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            padding: 7rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Sezioni */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+            margin: 0.5rem auto 0;
+        }
+
+        /* Griglia Prodotti */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--danger);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .product-price {
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Sezione Offerte Speciali / Banner */
+        .promo-highlight {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .promo-highlight h3 {
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* Carrello Laterale (Sidebar) */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 380px;
+            height: 100%;
+            background-color: #1e293b;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            z-index: 1100;
+            transition: right 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 1rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            background-color: #0f172a;
+            padding: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .cart-item-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .cart-item-info p {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .cart-footer {
+            border-top: 1px solid #334155;
+            padding-top: 1rem;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background-color: #10b981;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            background-color: #059669;
+        }
+
+        /* Overlay scuro per il carrello */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1050;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Assistenza & Contatti */
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background-color: #0f172a;
+            color: white;
+        }
+
+        .form-group textarea {
+            height: 130px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #090d16;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid #334155;
+            margin-top: 4rem;
+        }
+
+        @media(max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigazione -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">⚡ TechStore</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#offers">Offerte & Promozioni</a></li>
+                <li><a href="#catalog">Catalogo</a></li>
+                <li><a href="#contact">Assistenza & Contatti</a></li>
+                <li>
+                    <button class="cart-btn" onclick="toggleCart()">
+                        🛒 Carrello <span class="cart-badge" id="cart-count">0</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Overlay per il carrello -->
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+    <!-- Carrello Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Il tuo Carrello</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItemsContainer">
+            <p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Il carrello è vuoto.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Totale:</span>
+                <span id="cartTotal">€ 0,00</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Procedi all'Ordine</button>
+        </div>
+    </div>
+
+    <!-- Hero / Promozioni Banner Principale -->
+    <section id="home" class="hero">
+        <h1>Il futuro della tecnologia al miglior prezzo</h1>
+        <p>Approfitta subito delle offerte lampo e ricevi la spedizione gratuita.</p>
+        <a href="#offers" class="btn">Scopri le Offerte</a>
+    </section>
+
+    <!-- Sezione Offerte e Promozioni -->
+    <section id="offers">
+        <h2 class="section-title">Offerte & Promozioni Lampo</h2>
+        <div class="promo-highlight">
+            <h3>🔥 Sconti attivi fino al -40%!</h3>
+            <p>I migliori prodotti tech a prezzo ribassato per un periodo limitato. Non farteli scappare.</p>
+        </div>
+        <!-- Prodotti in offerta (partecipano alle 6 totali o in evidenza) -->
+    </section>
+
+    <!-- Catalogo Prodotti (6 Prodotti Funzionanti) -->
+    <section id="catalog">
+        <h2 class="section-title">Catalogo Completo (6 Prodotti)</h2>
+        <div class="products-grid">
+            
+            <!-- Prodotto 1 -->
+            <div class="product-card">
+                <span class="discount-badge">-20%</span>
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80" alt="Smartphone Ultra X" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Smartphone Ultra X</h3>
+                    <div class="price-container">
+                        <span class="product-price">€ 799,00</span>
+                        <span class="old-price">€ 999,00</span>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Smartphone Ultra X', 799.00)">Aggiungi al Carrello</button>
+                </div>
+            </div>
+
+            <!-- Prodotto 2 -->
+            <div class="product-card">
+                <span class="discount-badge">-15%</span>
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80" alt="Laptop ProBook 15" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Laptop ProBook 15</h3>
+                    <div class="price-container">
+                        <span class="product-price">€ 1.249,00</span>
+                        <span class="old-price">€ 1.470,00</span>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Laptop ProBook 15', 1249.00)">Aggiungi al Carrello</button>
+                </div>
+            </div>
+
+            <!-- Prodotto 3 -->
+            <div class="product-card">
+                <span class="discount-badge">-30%</span>
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" alt="Cuffie Wireless ANC" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Cuffie Wireless ANC</h3>
+                    <div class="price-container">
+                        <span class="product-price">€ 139,00</span>
+                        <span class="old-price">€ 199,00</span>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Cuffie Wireless ANC', 139.00)">Aggiungi al Carrello</button>
+                </div>
+            </div>
+
+            <!-- Prodotto 4 -->
+            <div class="product-card">
+                <span class="discount-badge">-10%</span>
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" alt="Smartwatch FitOne" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Smartwatch FitOne</h3>
+                    <div class="price-container">
+                        <span class="product-price">€ 149,00</span>
+                        <span class="old-price">€ 165,00</span>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Smartwatch FitOne', 149.00)">Aggiungi al Carrello</button>
+                </div>
+            </div>
+
+            <!-- Prodotto 5 -->
+            <div class="product-card">
+                <span class="discount-badge">-25%</span>
+                <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=500&q=80" alt="Tablet TabAir 10" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Tablet TabAir 10</h3>
+                    <div class="price-container">
+                        <span class="product-price">€ 320,00</span>
+                        <span class="old-price">€ 429,00</span>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Tablet TabAir 10', 320.00)">Aggiungi al Carrello</button>
+                </div>
+            </div>
+
+            <!-- Prodotto 6 -->
+            <div class="product-card">
+                <span class="discount-badge">-20%</span>
+                <img src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=500&q=80" alt="Console GameBox V" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Console GameBox V</h3>
+                    <div class="price-container">
+                        <span class="product-price">€ 399,00</span>
+                        <span class="old-price">€ 499,00</span>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Console GameBox V', 399.00)">Aggiungi al Carrello</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Assistenza & Contatti -->
+    <section id="contact">
+        <h2 class="section-title">Assistenza & Contatti</h2>
+        <div class="contact-container">
+            <form onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label for="name">Nome e Cognome</label>
+                    <input type="text" id="name" required placeholder="Il tuo nome">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="tua@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="message">Messaggio / Richiesta Assistenza</label>
+                    <textarea id="message" required placeholder="Scrivi qui la tua richiesta..."></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Invia Messaggio</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 TechStore. Tutti i diritti riservati.</p>
+    </footer>
+
+    <!-- Script JavaScript per le funzionalità -->
+    <script>
+        let cart = [];
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            updateCartUI();
+            toggleCart(); // Apre automaticamente il carrello quando aggiungi qualcosa
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const cartTotal = document.getElementById('cartTotal');
+
+            let totalCount = 0;
+            let totalPrice = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Il carrello è vuoto.</p>';
+            } else {
+                cartItemsContainer.innerHTML = '';
+                cart.forEach(item => {
+                    totalCount += item.quantity;
+                    totalPrice += item.price * item.quantity;
+
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <h4>${item.name}</h4>
+                                <p>€ ${item.price.toFixed(2)} x ${item.quantity}</p>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart('${item.name}')">&🗑️</button>
+                        </div>
+                    `;
+                });
+            }
+
+            cartCount.innerText = totalCount;
+            cartTotal.innerText = `€ ${totalPrice.toFixed(2)}`;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Il carrello è vuoto!");
+                return;
+            }
+            alert("Ordine completato con successo! Grazie per aver acquistato su TechStore.");
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            alert("Messaggio inviato correttamente! Il nostro team di assistenza ti risponderà presto.");
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
